@@ -49,11 +49,16 @@ export function init(config) {
 export function getMoreInfoResult(query = []) {
   let requests = [];
   query.forEach((value) => {
-    let params = {
-    	identifier: {
-    		faust: value.pid.split(":").pop()
+  	let identifiers = [];
+    let params = {};
+    let identifier;
+    value.forEach((pid) => {
+    	identifier = {
+    		faust: pid.pid.split(":").pop()
     	}
-    };
+    	identifiers.push(identifier);
+    });
+    params.identifier = identifiers;
     requests.push(sendMoreInfoRequest(params));
   });
 
