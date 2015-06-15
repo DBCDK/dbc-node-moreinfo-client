@@ -1,6 +1,6 @@
 'use strict';
 
-import * as BaseSoapClient from "dbc-node-basesoap-client";
+import * as BaseSoapClient from 'dbc-node-basesoap-client';
 
 let wsdl = null;
 let defaults = {};
@@ -11,10 +11,10 @@ let defaults = {};
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
- 
+
 function sendMoreInfoRequest(params) {
   let moreinfo = BaseSoapClient.client(wsdl, defaults, '');
-  return moreinfo.request("moreInfo", params, null, true);
+  return moreinfo.request('moreInfo', params, null, true);
 }
 
 /**
@@ -30,12 +30,12 @@ export function init(config) {
     wsdl = config.wsdl;
   }
   defaults = {
-		authentication: {
-    	authenticationUser: config.user,
-    	authenticationGroup: config.group,
-    	authenticationPassword: config.password
-  	}
-  };  	
+    authentication: {
+      authenticationUser: config.user,
+      authenticationGroup: config.group,
+      authenticationPassword: config.password
+    }
+  };
 }
 
 /**
@@ -51,10 +51,12 @@ export function getMoreInfoResult(identifiers = []) {
   let requests = [];
   let params = {};
   for (let id in identifiers) {
-    params.identifier = {faust: identifiers[id]};
-    requests.push(sendMoreInfoRequest(params));
+    if (identifiers.hasOwnProperty(id)) {
+      params.identifier = {faust: identifiers[id]};
+      requests.push(sendMoreInfoRequest(params));
+    }
   }
 
   return requests;
-  
+
 }

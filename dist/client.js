@@ -59,17 +59,16 @@ function init(config) {
  */
 
 function getMoreInfoResult() {
-  var query = arguments[0] === undefined ? [] : arguments[0];
+  var identifiers = arguments[0] === undefined ? [] : arguments[0];
 
   var requests = [];
-  query.forEach(function (value) {
-    var params = {
-      identifier: {
-        faust: value.pid.split(':').pop()
-      }
-    };
-    requests.push(sendMoreInfoRequest(params));
-  });
+  var params = {};
+  for (var id in identifiers) {
+    if (identifiers.hasOwnProperty(id)) {
+      params.identifier = { faust: identifiers[id] };
+      requests.push(sendMoreInfoRequest(params));
+    }
+  }
 
   return requests;
 }
