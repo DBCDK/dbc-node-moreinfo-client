@@ -51,7 +51,7 @@ export function getMoreInfoResult(identifiers = []) {
   let requests = [];
   let params = {};
   for (let id in identifiers) {
-    params.identifier = {faust: id};
+    params.identifier = {faust: identifiers[id]};
     requests.push(sendMoreInfoRequest(params));
   }
 
