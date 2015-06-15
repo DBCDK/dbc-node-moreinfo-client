@@ -46,21 +46,15 @@ export function init(config) {
  * @param {Array} query Array of parameter-objects each representing a request
  * @return {Array} An array of promises is returned
  */
-export function getMoreInfoResult(query = []) {
+export function getMoreInfoResult(identifiers = []) {
+
   let requests = [];
-  query.forEach((value) => {
-  	let identifiers = [];
-    let params = {};
-    let identifier;
-    value.forEach((pid) => {
-    	identifier = {
-    		faust: pid.pid.split(":").pop()
-    	}
-    	identifiers.push(identifier);
-    });
-    params.identifier = identifiers;
+  let params = {};
+  for (let id in identifiers) {
+    params.identifier = {faust: id};
     requests.push(sendMoreInfoRequest(params));
-  });
+  }
 
   return requests;
+  
 }
