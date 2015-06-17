@@ -1,5 +1,5 @@
 {
-  "name": "dbc-node-moreinfp-client",
+  "name": "dbc-node-moreinfo-client",
   "version": "0.0.1",
   "description": "Client for DBC webservice MoreInfo",
   "main": "index.js",
