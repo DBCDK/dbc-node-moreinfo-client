@@ -62,13 +62,15 @@ function getMoreInfoResult() {
   var identifiers = arguments[0] === undefined ? [] : arguments[0];
 
   var requests = [];
+  var identifier = [];
   var params = {};
-  for (var id in identifiers) {
-    if (identifiers.hasOwnProperty(id)) {
-      params.identifier = { faust: identifiers[id] };
-      requests.push(sendMoreInfoRequest(params));
+  var ids = identifiers.identifiers;
+  for (var id in ids) {
+    if (ids.hasOwnProperty(id)) {
+      identifier.push({ faust: ids[id] });
     }
   }
-
+  params.identifier = identifier;
+  requests.push(sendMoreInfoRequest(params));
   return requests;
 }

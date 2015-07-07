@@ -49,14 +49,16 @@ export function init(config) {
 export function getMoreInfoResult(identifiers = []) {
 
   let requests = [];
+  let identifier = [];
   let params = {};
-  for (let id in identifiers) {
-    if (identifiers.hasOwnProperty(id)) {
-      params.identifier = {faust: identifiers[id]};
-      requests.push(sendMoreInfoRequest(params));
+  const ids = identifiers.identifiers;
+  for (let id in ids) {
+    if (ids.hasOwnProperty(id)) {
+      identifier.push({faust: ids[id]});
     }
   }
-
+  params.identifier = identifier;
+  requests.push(sendMoreInfoRequest(params));
   return requests;
 
 }
