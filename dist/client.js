@@ -47,6 +47,8 @@ function init(config) {
       authenticationPassword: config.password
     }
   };
+
+  return { getMoreInfoResult: getMoreInfoResult };
 }
 
 /**
@@ -54,23 +56,15 @@ function init(config) {
  * As the query is expected to be an array it is possible to make multiple
  * requests at once, each returned as a Promise.
  *
- * @param {Array} query Array of parameter-objects each representing a request
- * @return {Array} An array of promises is returned
+ * @param {Object} query object of parameter-objects each representing a request
+ * @return {Promise} A promise is returned
  */
 
-function getMoreInfoResult() {
-  var identifiers = arguments[0] === undefined ? [] : arguments[0];
-
-  var requests = [];
-  var identifier = [];
+function getMoreInfoResult(identifiers) {
   var params = {};
-  var ids = identifiers.identifiers;
-  for (var id in ids) {
-    if (ids.hasOwnProperty(id)) {
-      identifier.push({ faust: ids[id] });
-    }
-  }
-  params.identifier = identifier;
-  requests.push(sendMoreInfoRequest(params));
-  return requests;
+  params.identifier = identifiers.identifiers.map(function (id) {
+    return { faust: id };
+  });
+
+  return sendMoreInfoRequest(params);
 }
