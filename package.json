@@ -8,6 +8,7 @@
     "build": "npm run cleardest && babel ./src -d dist",
     "cleardest": "rm -rf ./dist",
     "lint": "eslint ./src",
+    "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
     "watch": "npm run cleardest && babel ./src --watch -d dist"
   },
   "repository": {
