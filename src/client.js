@@ -18,6 +18,23 @@ function sendMoreInfoRequest(params) {
 }
 
 /**
+ * Constructs the objects of parameters for this type of request.
+ * As the query is expected to be an array it is possible to make multiple
+ * requests at once, each returned as a Promise.
+ *
+ * @param {Object} query object of parameter-objects each representing a request
+ * @return {Promise} A promise is returned
+ */
+export function getMoreInfoResult(identifiers) {
+  let params = {};
+  params.identifier = identifiers.identifiers.map((id) => {
+    return {faust: id};
+  });
+
+  return sendMoreInfoRequest(params);
+}
+
+/**
  * Setting the necessary paramerters for the client to be usable.
  * The endpoint is only set if endpoint is null to allow setting it through
  * environment variables.
@@ -40,19 +57,3 @@ export function init(config) {
   return {getMoreInfoResult};
 }
 
-/**
- * Constructs the objects of parameters for this type of request.
- * As the query is expected to be an array it is possible to make multiple
- * requests at once, each returned as a Promise.
- *
- * @param {Object} query object of parameter-objects each representing a request
- * @return {Promise} A promise is returned
- */
-export function getMoreInfoResult(identifiers) {
-  let params = {};
-  params.identifier = identifiers.identifiers.map((id) => {
-    return {faust: id}
-  });
-
-  return sendMoreInfoRequest(params);
-}
