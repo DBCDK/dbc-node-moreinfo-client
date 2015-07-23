@@ -19,10 +19,8 @@ function sendMoreInfoRequest(params) {
 
 /**
  * Constructs the objects of parameters for this type of request.
- * As the query is expected to be an array it is possible to make multiple
- * requests at once, each returned as a Promise.
  *
- * @param {Object} query object of parameter-objects each representing a request
+ * @param {Array} an array of one or more identifiers (faust)
  * @return {Promise} A promise is returned
  */
 export function getMoreInfoResult(identifiers) {
@@ -36,7 +34,7 @@ export function getMoreInfoResult(identifiers) {
 
 /**
  * Setting the necessary paramerters for the client to be usable.
- * The endpoint is only set if endpoint is null to allow setting it through
+ * The wsdl is only set if wsdl is null to allow setting it through
  * environment variables.
  *
  * @param {Object} config Config object with the necessary parameters to use
