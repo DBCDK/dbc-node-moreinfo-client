@@ -13,7 +13,7 @@ identifiers = [
   '87654321'
 ];
 
-OpenSearch.getSearchResult(params);
+MoreInfo.getMoreInfoResult(identifiers);
 
 ```
 
