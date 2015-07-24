@@ -3,8 +3,8 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.init = init;
 exports.getMoreInfoResult = getMoreInfoResult;
+exports.init = init;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -28,8 +28,24 @@ function sendMoreInfoRequest(params) {
 }
 
 /**
+ * Constructs the objects of parameters for this type of request.
+ *
+ * @param {Array} an array of one or more identifiers (faust)
+ * @return {Promise} A promise is returned
+ */
+
+function getMoreInfoResult(identifiers) {
+  var params = {};
+  params.identifier = identifiers.identifiers.map(function (id) {
+    return { faust: id };
+  });
+
+  return sendMoreInfoRequest(params);
+}
+
+/**
  * Setting the necessary paramerters for the client to be usable.
- * The endpoint is only set if endpoint is null to allow setting it through
+ * The wsdl is only set if wsdl is null to allow setting it through
  * environment variables.
  *
  * @param {Object} config Config object with the necessary parameters to use
@@ -49,22 +65,4 @@ function init(config) {
   };
 
   return { getMoreInfoResult: getMoreInfoResult };
-}
-
-/**
- * Constructs the objects of parameters for this type of request.
- * As the query is expected to be an array it is possible to make multiple
- * requests at once, each returned as a Promise.
- *
- * @param {Object} query object of parameter-objects each representing a request
- * @return {Promise} A promise is returned
- */
-
-function getMoreInfoResult(identifiers) {
-  var params = {};
-  params.identifier = identifiers.identifiers.map(function (id) {
-    return { faust: id };
-  });
-
-  return sendMoreInfoRequest(params);
 }
