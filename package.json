@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register -R mocha-jenkins-reporter",
+    "test:junit": "npm run test",
     "build": "npm run cleardest && babel ./src -d dist",
     "cleardest": "rm -rf ./dist",
     "lint": "eslint ./src",
