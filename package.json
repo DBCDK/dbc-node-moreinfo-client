@@ -19,8 +19,8 @@
   "keywords": [
     "dbc"
   ],
-  "author": "DBC A/S",
-  "license": "ISC",
+  "author": "dbcdk",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/DBCDK/dbc-node-moreinfo-client/issues"
   },
@@ -35,6 +35,6 @@
     "mocha-jenkins-reporter": "^0.1.9"
   },
   "dependencies": {
-    "dbc-node-basesoap-client": "git+https://github.com/DBCDK/dbc-node-basesoap-client#stable_dist"
+    "dbc-node-basesoap-client": "^1.0.1"
   }
 }
