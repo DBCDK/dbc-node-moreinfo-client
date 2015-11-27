@@ -2,56 +2,51 @@
 
 import * as BaseSoapClient from 'dbc-node-basesoap-client';
 
-let wsdl = null;
-let defaults = {};
-
-/**
- * Retrieves data from the webservice based on the parameters given
- *
- * @param {Object} params Parameters for the request
- * @return {Promise}
- */
-
-function sendMoreInfoRequest(params) {
-  let moreinfo = BaseSoapClient.client(wsdl, defaults, '');
-  return moreinfo.request('moreInfo', params, null, true);
-}
-
 /**
  * Constructs the objects of parameters for this type of request.
  *
  * @param {Array} an array of one or more identifiers (faust)
  * @return {Promise} A promise is returned
  */
-export function getMoreInfoResult(identifiers) {
+function getMoreInfoResult(client, identifiers) {
   let params = {};
   params.identifier = identifiers.identifiers.map((id) => {
     return {faust: id};
   });
 
-  return sendMoreInfoRequest(params);
+  return client.request('moreInfo', params, null, true);
 }
 
 /**
- * Setting the necessary paramerters for the client to be usable.
- * The wsdl is only set if wsdl is null to allow setting it through
- * environment variables.
+ * Setting the necessary parameters for the client to be usable.
  *
  * @param {Object} config Config object with the necessary parameters to use
  * the webservice
  */
-export function init(config) {
-  if (!wsdl) {
-    wsdl = config.wsdl;
+export default function MoreInfoClient(config) {
+  if (typeof config !== 'object') {
+    throw new Error('A config object should be provided');
   }
-  defaults = {
+
+  if (!config.wsdl) {
+    throw new Error('A wsdl should be provided with the given config object');
+  }
+
+  if (!config.user || !config.group || !config.password) {
+    throw new Error('Authentication user, group and password should be provided with the given config object');
+  }
+
+  const defaults = {
     authentication: {
       authenticationUser: config.user,
       authenticationGroup: config.group,
       authenticationPassword: config.password
     }
   };
+  const client = BaseSoapClient.client(config.wsdl, defaults, '');
 
-  return {getMoreInfoResult};
+  return {
+    getMoreInfoResult: getMoreInfoResult.bind(null, client)
+  };
 }
 
